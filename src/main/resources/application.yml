@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    username: postgres
+    password: secret
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/ecommerce
+    name: postgres
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+server:
+  servlet:
+    context-path: '/api/'
