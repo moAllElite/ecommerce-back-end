@@ -64,4 +64,19 @@ public class ProductController {
         productService.delete(id);
         return  ResponseEntity.accepted().build();
     }
+
+    /**
+     * Search product  by category name  localhost:8080/api/products/book&index=0
+     */
+    @GetMapping("/{categoryName}")
+
+    public ResponseEntity<Optional<List<ProductDto>>> searchByCategoryName(
+            @RequestParam(value = "category",defaultValue = "") String categoryName,
+            @RequestParam(defaultValue = "6",value = "size",required = false)int size,
+            @RequestParam(defaultValue = "0",required = false) int index
+    ){
+        return  ResponseEntity.ok(
+                productService.searchProductsByCategoryName(categoryName)
+        );
+    }
 }

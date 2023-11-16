@@ -78,13 +78,14 @@ class ProductServiceImplTest {
     void paginatedAndSortingProducts() {
         //given
         double expectedLength = 1;
-        int pageSize = 2;
+        int pageSize = 3;
         int pageNumber = 0;
         //when
-        double totalElements=productService.paginatedAndSortingProducts(pageSize,pageNumber).getTotalElements();
+        double totalPages=productService.paginatedAndSortingProducts(pageSize,pageNumber).getTotalPages();
+
         //then
-        System.out.println("success expected length:"+expectedLength+"\t is equal to total product:"+totalElements);
-        assertEquals("success", expectedLength, totalElements);
+        System.out.println("success expected length:"+expectedLength+"\t is equal to total product:"+totalPages);
+        assertEquals("success", expectedLength, totalPages);
 
     }
 
