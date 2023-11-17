@@ -5,6 +5,7 @@ import com.flyobs.ecommercebackend.entities.Category;
 import com.flyobs.ecommercebackend.mapping.CategoryMapping;
 import com.flyobs.ecommercebackend.repositories.CategoryRepository;
 import com.flyobs.ecommercebackend.services.ICategoryService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import java.math.BigInteger;
 import java.util.List;
@@ -21,7 +22,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
 
     @Override
-    public List<CategoryDto> getAllCategories() {
+    public @NotNull List<CategoryDto> getAllCategories() {
         return  categoryRepository
                 .findAll()
                 .stream()
@@ -30,26 +31,26 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public Optional<CategoryDto> getCategoryById(BigInteger id) {
+    public @NotNull Optional<CategoryDto> getCategoryById(@NotNull BigInteger id) {
         return categoryRepository
                 .findById(id)
                 .map(categoryMapping::fromCategoryEntity);
     }
 
     @Override
-    public void delete(BigInteger id) {
+    public void delete(@NotNull BigInteger id) {
         categoryRepository.deleteById(id);
     }
 
     @Override
-    public Category saveCategory(CategoryDto categoryDto) {
+    public @NotNull Category saveCategory(CategoryDto categoryDto) {
         return categoryRepository.save(
                 categoryMapping.toCategoryEntity(categoryDto)
         );
     }
 
     @Override
-    public Category update(CategoryDto categoryDto) {
+    public @NotNull Category update(CategoryDto categoryDto) {
         return categoryRepository.save(
                 categoryMapping.toCategoryEntity(categoryDto)
         );

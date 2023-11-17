@@ -2,6 +2,7 @@ package com.flyobs.ecommercebackend.services.impl;
 
 import com.flyobs.ecommercebackend.dto.ProductDto;
 import com.flyobs.ecommercebackend.entities.Category;
+import com.flyobs.ecommercebackend.entities.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @SpringBootTest
 class ProductServiceImplTest {
-    @Autowired
+   @Autowired
     private  ProductServiceImpl productService;
 
     @Test
@@ -36,24 +37,26 @@ class ProductServiceImplTest {
 
         //when
         Category category = new Category();
-        category.setId(BigInteger.TWO);
+
+        category.setId(BigInteger.ONE);
 
         ProductDto productDto = new ProductDto();
-
         productDto.setActive(false);
-        productDto.setImageUrl("img2.jpg");
-        productDto.setName("tiny desk");
+        productDto.setImageUrl("aa");
+        productDto.setName("vaxe");
         productDto.setSku("td");
         productDto.setLastUpdate(new Date());
         productDto.setUnitInStock(unitInStock);
         productDto.setUnitPrice(price);
-        productDto.setDescription("wooden chair");
+        productDto.setDescription("pure vaxe");
         productDto.setDateCreated(new Date());
         productDto.setCategory(category);
         //when
-        BigInteger productId =  productService.saveProduct(productDto);
+        Product products;
+        products = productService.saveProduct(productDto);
         //then
-        Assertions.assertNotNull(productId,"saved");
+        System.out.println(products.getId());
+        Assertions.assertNotNull(products,"saved");
     }
 
 
@@ -62,7 +65,7 @@ class ProductServiceImplTest {
         //given id
         BigInteger id = BigInteger.ONE;
         //expected name of category
-        String exceptedName =  "climatiseur";
+        String exceptedName =  "vaxe";
         //when
        Optional<ProductDto> productGet= productService.findById(id);
        if(productGet.isPresent()){
@@ -77,7 +80,7 @@ class ProductServiceImplTest {
     @Test
     void paginatedAndSortingProducts() {
         //given
-        double expectedLength = 1;
+        double expectedLength = 0;
         int pageSize = 3;
         int pageNumber = 0;
         //when

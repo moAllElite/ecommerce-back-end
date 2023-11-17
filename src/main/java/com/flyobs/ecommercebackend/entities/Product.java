@@ -4,19 +4,15 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 @Getter@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "product")
 public class Product  {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private BigInteger id;
     private  String sku;
     private  String name;
@@ -29,7 +25,7 @@ public class Product  {
     private Date dateCreated;
     @UpdateTimestamp
     private Date lastUpdate;
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade ={CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH,CascadeType.DETACH} ,fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
 }
