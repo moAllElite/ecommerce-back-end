@@ -18,7 +18,7 @@ public class Category  {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private BigInteger id;
     private String categoryName;
-    @OneToMany(mappedBy = "category",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category",fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Product> products;
 }

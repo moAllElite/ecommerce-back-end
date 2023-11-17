@@ -2,17 +2,15 @@ package com.flyobs.ecommercebackend.dto;
 
 
 import com.flyobs.ecommercebackend.entities.Category;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
+@RequiredArgsConstructor
+@Getter@Setter
 public class ProductDto {
     private BigInteger id;
     

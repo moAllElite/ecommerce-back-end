@@ -11,6 +11,7 @@ import java.util.Optional;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +20,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("categories")
 @RestController
 public class CategoryController {
-    private final CategoryServiceImpl categoryServiceImpl;
+    private final @NotNull CategoryServiceImpl categoryServiceImpl;
     /**
      *  Get all categories GET http:localhost:8080/api/categories
      * @return list of categories
      */
     @GetMapping
-    public ResponseEntity<List<CategoryDto>> showAllCategories(){
+    public @NotNull ResponseEntity<List<CategoryDto>> showAllCategories(){
         return ResponseEntity.ok(
                 categoryServiceImpl.getAllCategories()
         );
@@ -33,8 +34,7 @@ public class CategoryController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/")
-    @Transactional
-    public  ResponseEntity<BigInteger> save(
+    public @NotNull ResponseEntity<BigInteger> save(
           @Valid @RequestBody CategoryDto categoryDto
     ){
         return  ResponseEntity.ok(
@@ -49,9 +49,8 @@ public class CategoryController {
      * @return a response of category by id
      */
     @GetMapping("/{id}")
-    @Transactional
-    public  ResponseEntity<Optional<CategoryDto>> findById(
-            @PathVariable BigInteger id
+    public @NotNull ResponseEntity<Optional<CategoryDto>> findById(
+            @PathVariable @NotNull BigInteger id
     ){
         return ResponseEntity.ok(
             categoryServiceImpl
@@ -60,8 +59,8 @@ public class CategoryController {
     }
     @PutMapping("/{id}")
     @Transactional
-    public  ResponseEntity<Category> update(
-            @PathVariable BigInteger id,
+    public @NotNull ResponseEntity<Category> update(
+            @PathVariable @NotNull BigInteger id,
            @Valid @RequestBody CategoryDto categoryDto
     ){
         Optional<CategoryDto> categoryFound = categoryServiceImpl
@@ -76,9 +75,8 @@ public class CategoryController {
 
     }
     @DeleteMapping("/{id}")
-    @Transactional
-    public ResponseEntity<Void> deleteById(
-            @PathVariable BigInteger id
+    public @NotNull ResponseEntity<Void> deleteById(
+            @PathVariable @NotNull BigInteger id
     ){
         categoryServiceImpl.delete(id);
         return  ResponseEntity.noContent().build();
