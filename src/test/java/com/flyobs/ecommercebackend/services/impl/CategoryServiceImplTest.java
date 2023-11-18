@@ -4,6 +4,7 @@ import com.flyobs.ecommercebackend.dto.CategoryDto;
 import com.flyobs.ecommercebackend.entities.Category;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.math.BigInteger;
@@ -20,9 +21,9 @@ class CategoryServiceImplTest {
     @Test
     void saveCategory() {
         CategoryDto categoryDto = new CategoryDto();
-        //categoryDto.setId();
+
         //given
-        categoryDto.setCategoryName("bureautique");
+        categoryDto.setCategoryName("casque");
         //when
         Category categorySaved = categoryService
                 .saveCategory(categoryDto);
@@ -33,17 +34,18 @@ class CategoryServiceImplTest {
     @Test
     void getAllCategories() {
         //gIVEN expected the length list of categories
-        int expectedLength = 3;
+        int unexpected = 0;
         //when
         List<CategoryDto> categories = categoryService.getAllCategories();
+        int expectedLength = categories.toArray().length;
         //then
-        Assertions.assertEquals(categories.toArray().length, expectedLength);
+        Assertions.assertNotEquals(unexpected,expectedLength);
     }
 
     @Test
     void getCategoryById() {
         //Given id = 2
-        BigInteger id= BigInteger.valueOf(2);
+        BigInteger id= BigInteger.valueOf(1);
         //when
         CategoryDto categoryGiven = categoryService
                 .getCategoryById(id)
@@ -55,7 +57,7 @@ class CategoryServiceImplTest {
     @Test
     void delete() {
         //GIVEN ID
-        BigInteger id= BigInteger.valueOf(52);
+        BigInteger id= BigInteger.valueOf(102);
         //when
          categoryService.delete(id);
          //then

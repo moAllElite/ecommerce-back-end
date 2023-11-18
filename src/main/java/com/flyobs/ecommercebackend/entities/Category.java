@@ -1,6 +1,6 @@
 package com.flyobs.ecommercebackend.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +19,5 @@ public class Category  {
     private BigInteger id;
     private String categoryName;
     @OneToMany(mappedBy = "category",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<Product> products;
 }

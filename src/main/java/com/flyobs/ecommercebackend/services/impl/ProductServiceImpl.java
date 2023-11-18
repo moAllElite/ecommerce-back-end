@@ -1,12 +1,15 @@
 package com.flyobs.ecommercebackend.services.impl;
 
 import com.flyobs.ecommercebackend.dto.ProductDto;
+import com.flyobs.ecommercebackend.entities.Product;
 import com.flyobs.ecommercebackend.mapping.ProductMapping;
 import com.flyobs.ecommercebackend.repositories.ProductRepository;
 import java.math.BigInteger;
 import java.util.Optional;
 import com.flyobs.ecommercebackend.services.IProductService;
 import java.util.List;
+
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,17 +29,22 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public BigInteger saveProduct(ProductDto productDto) {
+    public Product saveProduct(ProductDto productDto) {
         return  productRepository.save(
                 productMapping.toProductEntity(productDto)
-        ).getId();
+        );
     }
     @Override
-    public Optional<List<ProductDto>> searchProductsByCategoryName(String categoryName) {
+    public Optional<List<ProductDto>> searchProductsByCategoryName(@NotNull String categoryName) {
+
         return Optional.of(productRepository
                 .findByCategory(categoryName)
                 .stream()
-                .filter(productDto -> categoryName.equals(productDto.getCategory().getCategoryName()))
+                .filter(
+                        productDto -> categoryName.equals(
+                        productDto.getCategory().getCategoryName()
+                        )
+                )
                 .toList());
     }
 
@@ -45,8 +53,10 @@ public class ProductServiceImpl implements IProductService {
         return productRepository
                 .findByName(name)
                 .stream()
+                .map(productMapping::fromProductEntity)
                 .filter(r -> name.equals(r.getName()))
-                .findFirst();
+                .findFirst()
+               ;
     }
 
     @Override

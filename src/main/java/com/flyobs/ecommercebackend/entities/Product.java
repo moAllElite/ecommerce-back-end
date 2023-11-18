@@ -29,7 +29,7 @@ public class Product  {
     private Date dateCreated;
     @UpdateTimestamp
     private Date lastUpdate;
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
 }

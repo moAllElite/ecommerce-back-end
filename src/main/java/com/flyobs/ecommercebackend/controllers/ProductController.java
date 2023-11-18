@@ -1,6 +1,8 @@
 package com.flyobs.ecommercebackend.controllers;
 import com.flyobs.ecommercebackend.dto.ProductDto;
 import java.util.*;
+
+import com.flyobs.ecommercebackend.entities.Product;
 import com.flyobs.ecommercebackend.services.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,7 +37,7 @@ public class ProductController {
      */
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<BigInteger>  saveProduct(
+    public ResponseEntity<Product>  saveProduct(
             @RequestBody ProductDto productDto
     ){
                 return ResponseEntity.ok(productService.saveProduct(productDto));
@@ -66,17 +68,28 @@ public class ProductController {
     }
 
     /**
-     * Search product  by category name  localhost:8080/api/products/book&index=0
+     * Search product  by category name  localhost:8080/api/products/book
      */
     @GetMapping("/{categoryName}")
 
     public ResponseEntity<Optional<List<ProductDto>>> searchByCategoryName(
-            @RequestParam(value = "category",defaultValue = "") String categoryName,
-            @RequestParam(defaultValue = "6",value = "size",required = false)int size,
-            @RequestParam(defaultValue = "0",required = false) int index
+            @RequestParam(value = "categoryName",defaultValue = "") String categoryName
     ){
         return  ResponseEntity.ok(
                 productService.searchProductsByCategoryName(categoryName)
         );
     }
+
+    /**
+     * Seacrh product by product name Get localhost:8080/api/products/hyundai
+     */
+    @GetMapping("/{name}")
+    public ResponseEntity<Optional<ProductDto>> searchByProductName(
+            @RequestParam(value = "name",defaultValue = "") String name
+    ){
+        return ResponseEntity.ok(
+          productService.searchByProductName(name)
+        );
+    }
 }
+

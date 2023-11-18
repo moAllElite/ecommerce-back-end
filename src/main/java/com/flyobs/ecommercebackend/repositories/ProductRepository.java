@@ -5,13 +5,19 @@ import com.flyobs.ecommercebackend.dto.ProductDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.flyobs.ecommercebackend.entities.Product;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.math.BigInteger;
 import java.util.Optional;
 
 public interface ProductRepository extends   JpaRepository<Product, BigInteger>{
-    @Query(nativeQuery = true,value = "from product as p and category as c where p.category.categoryName like c.categoryName% ")
-    Optional<ProductDto> findByCategory(String categoryName);
-    @Query(value = " from  product  p where p.name like %name%" ,nativeQuery = true)
-    Optional<ProductDto> findByName(String name);
+    @Query(
+            value = "SELECT * FROM product p  inner join  category c on c.id=p.id where c.category_name=:categoryName ",
+      nativeQuery = true
+    )
+
+   Optional<ProductDto> findByCategory(@Param("categoryName") String categoryName);
+    @Query("SELECT p FROM Product p WHERE p.name=:name")
+   Optional<Product> findByName(@Param("name") String name);
+
 }
