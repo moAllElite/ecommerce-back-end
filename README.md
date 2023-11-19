@@ -1,4 +1,8 @@
 # E-Commerce spring boot 3.1.5 API REST
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=moAllElite_ecommerce-springboot&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=moAllElite_ecommerce-springboot)
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=moAllElite_ecommerce-springboot)](https://sonarcloud.io/summary/new_code?id=moAllElite_ecommerce-springboot)
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/summary/new_code?id=moAllElite_ecommerce-springboot)
+
 Lancer le project avec l'url 
     
         http://localhost:8080/api/products
