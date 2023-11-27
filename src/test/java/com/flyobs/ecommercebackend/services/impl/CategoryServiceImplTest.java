@@ -4,26 +4,23 @@ import com.flyobs.ecommercebackend.dto.CategoryDto;
 import com.flyobs.ecommercebackend.entities.Category;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
-
 @SpringBootTest
 class CategoryServiceImplTest {
+
     @Autowired
-    private CategoryServiceImpl categoryService;
-
-
+    private  CategoryServiceImpl categoryService;
     @Test
     void saveCategory() {
         CategoryDto categoryDto = new CategoryDto();
 
         //given
-        categoryDto.setCategoryName("casque");
+        categoryDto.setCategoryName("tissus");
         //when
         Category categorySaved = categoryService
                 .saveCategory(categoryDto);
@@ -32,35 +29,27 @@ class CategoryServiceImplTest {
     }
 
     @Test
-    void getAllCategories() {
+     void getAllCategories() {
         //gIVEN expected the length list of categories
         int unexpected = 0;
         //when
         List<CategoryDto> categories = categoryService.getAllCategories();
-        int expectedLength = categories.toArray().length;
+
+        Integer expectedLength = categories.toArray().length;
         //then
-        Assertions.assertNotEquals(unexpected,expectedLength);
+        System.out.printf(expectedLength.toString());
+        Assertions.assertNotEquals(expectedLength,unexpected,"success");
     }
 
+
+
     @Test
-    void getCategoryById() {
-        //Given id = 2
+     void delete() {
+        //GIVEN ID
         BigInteger id= BigInteger.valueOf(1);
         //when
-        CategoryDto categoryGiven = categoryService
-                .getCategoryById(id)
-                .orElse(null);
+        categoryService.delete(id);
         //then
-        Assertions.assertNotNull(categoryGiven);
-    }
-
-    @Test
-    void delete() {
-        //GIVEN ID
-        BigInteger id= BigInteger.valueOf(102);
-        //when
-         categoryService.delete(id);
-         //then
         Assertions.assertNotNull(id,"succesful");
         System.out.println("Successfully deleted");
     }
@@ -68,17 +57,29 @@ class CategoryServiceImplTest {
     @Test
     void update() {
         //given
-        BigInteger id = BigInteger.TWO;
+        String expectedName="viande";
+        BigInteger id = BigInteger.valueOf(2);
         Optional<CategoryDto> category = categoryService.getCategoryById(id);
-        //category.get().setCategoryName("meuble");
-
+        category.ifPresent(categoryDto -> categoryDto.setCategoryName(expectedName));
         //when
-        Category categorySaved= categoryService.update(category.orElseThrow());
+
+        CategoryDto categorySaved= categoryService.update(id,category.orElse(null));
 
         //then
-        Assertions.assertNotNull(categorySaved);
-        System.out.println(categorySaved);
+        Assertions.assertEquals(expectedName,categorySaved.getCategoryName());
+        System.out.println(categorySaved.getCategoryName());
     }
 
+    @Test
+    void getCategoryById() {
+        //Given id = 2
+        BigInteger id= BigInteger.TWO;
+        //when
 
+            Optional<CategoryDto> categoryGiven = categoryService.getCategoryById(id);
+            System.out.println(categoryGiven.get().getCategoryName());
+            //then
+            Assertions.assertNotNull(categoryGiven.get());
+
+    }
 }

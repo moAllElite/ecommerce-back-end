@@ -5,24 +5,23 @@ import com.flyobs.ecommercebackend.entities.Category;
 import com.flyobs.ecommercebackend.mapping.CategoryMapping;
 import com.flyobs.ecommercebackend.repositories.CategoryRepository;
 import com.flyobs.ecommercebackend.services.ICategoryService;
-import org.jetbrains.annotations.NotNull;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class CategoryServiceImpl implements ICategoryService {
-    private final CategoryRepository categoryRepository;
-    private final   CategoryMapping categoryMapping;
-    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapping categoryMapping) {
-        this.categoryRepository = categoryRepository;
-        this.categoryMapping = categoryMapping;
-    }
+    private    CategoryRepository categoryRepository;
+    private   CategoryMapping categoryMapping;
 
 
     @Override
-    public @NotNull List<CategoryDto> getAllCategories() {
+    public List<CategoryDto> getAllCategories() {
         return  categoryRepository
                 .findAll()
                 .stream()
@@ -38,21 +37,29 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public void delete(@NotNull BigInteger id) {
+    public void delete(BigInteger id) {
         categoryRepository.deleteById(id);
     }
 
     @Override
-    public @NotNull Category saveCategory(CategoryDto categoryDto) {
+    public Category  saveCategory(CategoryDto categoryDto) {
+
         return categoryRepository.save(
-                categoryMapping.toCategoryEntity(categoryDto)
+                    categoryMapping.toCategoryEntity(categoryDto)
+
         );
     }
 
     @Override
-    public @NotNull Category update(CategoryDto categoryDto) {
-        return categoryRepository.save(
-                categoryMapping.toCategoryEntity(categoryDto)
+    public CategoryDto update(BigInteger id,CategoryDto categoryDto) {
+        if (!categoryRepository.existsById(id)){
+            return null;
+        }
+       categoryDto.setId(id);
+        Category    category = categoryMapping.toCategoryEntity(categoryDto);
+
+        return categoryMapping.fromCategoryEntity(
+                categoryRepository.save(category)
         );
     }
 

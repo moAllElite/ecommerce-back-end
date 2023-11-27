@@ -1,19 +1,18 @@
 package com.flyobs.ecommercebackend.dto;
 
 
-import com.flyobs.ecommercebackend.entities.Product;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
-import  java.util.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.math.BigInteger;
+
 @Getter@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryDto {
 
-    private Integer id;
-    @NotNull(message = "The category shouldn't be null")
-    @Min(value = 2)
+    private BigInteger id;
     private String categoryName;
-    private List<Product> product;
 }

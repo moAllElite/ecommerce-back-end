@@ -1,16 +1,16 @@
 package com.flyobs.ecommercebackend.dto;
 
 
-import com.flyobs.ecommercebackend.entities.Category;
-import lombok.*;
 
+
+import lombok.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
 
 @AllArgsConstructor
-
+@Builder
 @NoArgsConstructor
 @Getter@Setter
 public class ProductDto {
@@ -21,7 +21,7 @@ public class ProductDto {
     private  String name;
     
     private  String description;
-    
+
     private BigDecimal  unitPrice;
     
     private String imageUrl;
@@ -33,7 +33,5 @@ public class ProductDto {
     private Date dateCreated;
     
     private Date lastUpdate;
-
-    private Category category;
-
+    private CategoryDto category;
 }

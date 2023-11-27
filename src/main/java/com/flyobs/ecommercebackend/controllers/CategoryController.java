@@ -2,46 +2,42 @@ package com.flyobs.ecommercebackend.controllers;
 
 import com.flyobs.ecommercebackend.dto.CategoryDto;
 import com.flyobs.ecommercebackend.entities.Category;
-import com.flyobs.ecommercebackend.services.impl.CategoryServiceImpl;
+import com.flyobs.ecommercebackend.services.ICategoryService;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
-import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-@RequiredArgsConstructor
-@RequestMapping("categories")
+@AllArgsConstructor
+@RequestMapping("/categories")
 @RestController
 public class CategoryController {
-    private final @NotNull CategoryServiceImpl categoryServiceImpl;
+    private final ICategoryService categoryService;
     /**
      *  Get all categories GET http:localhost:8080/api/categories
      * @return list of categories
      */
     @GetMapping
-    public @NotNull ResponseEntity<List<CategoryDto>> showAllCategories(){
+    public ResponseEntity<List<CategoryDto>> showAllCategories(){
         return ResponseEntity.ok(
-                categoryServiceImpl.getAllCategories()
+                categoryService.getAllCategories()
         );
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/")
-    public @NotNull ResponseEntity<BigInteger> save(
+    @PostMapping
+    @Transactional
+    public  ResponseEntity<Category> save(
           @Valid @RequestBody CategoryDto categoryDto
     ){
-        return  ResponseEntity.ok(
-                categoryServiceImpl
-                        .saveCategory(categoryDto)
-                        .getId()
-        );
+        return  ResponseEntity.ok(categoryService.saveCategory(categoryDto));
     }
 
     /**
@@ -49,36 +45,42 @@ public class CategoryController {
      * @return a response of category by id
      */
     @GetMapping("/{id}")
-    public @NotNull ResponseEntity<Optional<CategoryDto>> findById(
-            @PathVariable @NotNull BigInteger id
+    @Transactional
+    public  ResponseEntity<Optional<CategoryDto>> findById(
+            @PathVariable BigInteger id
     ){
         return ResponseEntity.ok(
-            categoryServiceImpl
+            categoryService
                     .getCategoryById(id)
         );
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     @Transactional
-    public @NotNull ResponseEntity<Category> update(
-            @PathVariable @NotNull BigInteger id,
+    public  ResponseEntity<CategoryDto> update(
+            @PathVariable BigInteger id,
            @Valid @RequestBody CategoryDto categoryDto
     ){
-        Optional<CategoryDto> categoryFound = categoryServiceImpl
+        Optional<CategoryDto> categoryFound = categoryService
                 .getCategoryById(id);
         if(categoryFound.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        Category result = categoryServiceImpl
-                    .update(categoryDto);
+        CategoryDto result = categoryService
+                    .update(id,categoryDto);
         return  ResponseEntity.ok(result);
 
 
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
-    public @NotNull ResponseEntity<Void> deleteById(
-            @PathVariable @NotNull BigInteger id
+    @Transactional
+    public ResponseEntity<Void> deleteById(
+            @PathVariable BigInteger id
     ){
-        categoryServiceImpl.delete(id);
+        categoryService.delete(id);
         return  ResponseEntity.noContent().build();
     }
 }

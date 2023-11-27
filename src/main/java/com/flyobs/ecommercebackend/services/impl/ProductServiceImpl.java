@@ -1,21 +1,22 @@
 package com.flyobs.ecommercebackend.services.impl;
 
 import com.flyobs.ecommercebackend.dto.ProductDto;
-import com.flyobs.ecommercebackend.entities.Product;
 import com.flyobs.ecommercebackend.mapping.ProductMapping;
 import com.flyobs.ecommercebackend.repositories.ProductRepository;
-import java.math.BigInteger;
-import java.util.Optional;
 import com.flyobs.ecommercebackend.services.IProductService;
-import java.util.List;
-
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.util.List;
+import java.util.Optional;
+
+@AllArgsConstructor
 @Service
 public class ProductServiceImpl implements IProductService {
 
@@ -23,29 +24,21 @@ public class ProductServiceImpl implements IProductService {
 
     private final   ProductRepository productRepository;
 
-    public ProductServiceImpl(ProductMapping productMapping, ProductRepository productRepository) {
-        this.productMapping = productMapping;
-        this.productRepository = productRepository;
-    }
 
-    @Override
-    public Product saveProduct(ProductDto productDto) {
-        return  productRepository.save(
-                productMapping.toProductEntity(productDto)
-        );
-    }
+
     @Override
     public Optional<List<ProductDto>> searchProductsByCategoryName(@NotNull String categoryName) {
+      return productRepository
+              .findByCategory(categoryName)
+              .map(
+                      products -> {
+                          products.forEach(
+                                  product -> product.getCategory().getCategoryName().equals(categoryName)
+                          );
+                        return products.stream().map(productMapping::fromProductEntity).toList();
+                      }
 
-        return Optional.of(productRepository
-                .findByCategory(categoryName)
-                .stream()
-                .filter(
-                        productDto -> categoryName.equals(
-                        productDto.getCategory().getCategoryName()
-                        )
-                )
-                .toList());
+        );
     }
 
     @Override
@@ -55,12 +48,20 @@ public class ProductServiceImpl implements IProductService {
                 .stream()
                 .map(productMapping::fromProductEntity)
                 .filter(r -> name.equals(r.getName()))
-                .findFirst()
-               ;
+                .findFirst();
     }
 
     @Override
-    public Optional<ProductDto> findById(BigInteger id) {
+    public BigInteger saveProduct(ProductDto productDto) {
+        //convert entity  ->dto
+
+        return productRepository.save(
+                productMapping.toProductEntity(productDto)
+        ).getId();
+    }
+
+    @Override
+    public  Optional<ProductDto> findById(BigInteger id) {
         return productRepository
                 .findById(id)
                 .stream()
@@ -70,11 +71,12 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public Page<ProductDto> paginatedAndSortingProducts(int pageSize, int pageNumber) {
+    public Page<ProductDto> paginatedAndSortingProducts(int pageSize, int pageNumber,boolean isAscending) {
         Sort sort = Sort.by("name");
 
-        Pageable paging = PageRequest.of(pageNumber, pageSize,sort);
-        return  productRepository
+        Pageable paging = PageRequest.of(pageNumber, pageSize,isAscending?sort.ascending():sort.descending());
+
+        return productRepository
                 .findAll(paging)
                 .map(productMapping::fromProductEntity);
     }

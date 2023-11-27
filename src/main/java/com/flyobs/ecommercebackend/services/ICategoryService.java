@@ -11,6 +11,6 @@ public interface ICategoryService {
     List<CategoryDto> getAllCategories();
     Optional<CategoryDto> getCategoryById(BigInteger id);
     void delete (BigInteger id);
-    Category saveCategory(CategoryDto categoryDto);
-    Category update(CategoryDto categoryDto);
+    Category    saveCategory(CategoryDto categoryDto);
+    CategoryDto update(BigInteger id,CategoryDto categoryDto);
 }

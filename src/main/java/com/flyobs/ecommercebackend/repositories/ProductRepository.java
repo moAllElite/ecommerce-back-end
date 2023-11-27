@@ -1,23 +1,19 @@
 package com.flyobs.ecommercebackend.repositories;
 
-
-import com.flyobs.ecommercebackend.dto.ProductDto;
-import org.springframework.data.jpa.repository.JpaRepository;
 import com.flyobs.ecommercebackend.entities.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigInteger;
 import java.util.Optional;
+import java.util.List;
 
 public interface ProductRepository extends   JpaRepository<Product, BigInteger>{
-    @Query(
-            value = "SELECT * FROM product p  inner join  category c on c.id=p.id where c.category_name=:categoryName ",
-      nativeQuery = true
-    )
-
-   Optional<ProductDto> findByCategory(@Param("categoryName") String categoryName);
+    @Query(value = "SELECT p FROM Product  p  JOIN Category c   on c.id=p.category.id" +
+            "  WHERE p.category.categoryName=:categoryName ")
+    Optional<List<Product>> findByCategory(@RequestParam String categoryName);
     @Query("SELECT p FROM Product p WHERE p.name=:name")
-   Optional<Product> findByName(@Param("name") String name);
+   Optional<Product> findByName(String name);
 
 }
