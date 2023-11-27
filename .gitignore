@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+####    USER DETAILS####
+/src/main/java/com/flyobs/ecommercebackend/security
+/src/main/java/com/flyobs/ecommercebackend/services/impl/UserDetailsServiceImpl.java
+/src/main/java/com/flyobs/ecommercebackend/services/impl/AccountServiceImpl.java
