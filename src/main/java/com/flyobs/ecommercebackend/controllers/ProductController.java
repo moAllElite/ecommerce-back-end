@@ -81,8 +81,8 @@ public class ProductController {
     /**
      * Search product  by category name  localhost:8080/api/products/search-by-category?name=verre
      */
-    @RequestMapping("/search-by-category")
-    @GetMapping("/{name}")
+
+    @GetMapping("/search-by-category/{name}")
 
     public ResponseEntity<Optional<List<ProductDto>>> searchByCategoryName(
             @RequestParam(value = "name",defaultValue = "") String categoryName
