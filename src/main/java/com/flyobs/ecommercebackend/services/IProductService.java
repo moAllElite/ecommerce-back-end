@@ -10,6 +10,5 @@ public interface IProductService {
     Optional<ProductDto>  findById(BigInteger id);
     Page<ProductDto> paginatedAndSortingProducts(int pageSize, int index);
     void delete(BigInteger id);
-    Optional<List<ProductDto>> searchProductsByCategoryName(String categoryName);
-    Optional<ProductDto> searchByProductName(String name);
+
 }
