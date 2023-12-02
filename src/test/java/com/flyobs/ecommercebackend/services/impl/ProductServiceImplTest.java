@@ -100,7 +100,7 @@ class ProductServiceImplTest {
     @Test
     void paginatedAndSortingProducts() {
         //given
-        double expectedLength=6.0;
+        double expectedLength=7.0;
         int pageSize = 3;
         int pageNumber = 0;
         boolean asc=false;

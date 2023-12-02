@@ -13,7 +13,7 @@ public class EcommerceBackEndApplication {
 		SpringApplication.run(EcommerceBackEndApplication.class, args);
 	}
 
-
+	//@Bean
 
 
 
