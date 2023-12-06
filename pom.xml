@@ -18,10 +18,8 @@
 		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
 		<org.projectlombok.version>1.18.30</org.projectlombok.version>
 		<sonar.projectKey>moAllElite_ecommerce-springboot</sonar.projectKey>
-
-			<sonar.organization>moallelite</sonar.organization>
-			<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-
+		<sonar.organization>moallelite</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<dependencies>
