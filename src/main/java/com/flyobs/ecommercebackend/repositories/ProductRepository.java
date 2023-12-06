@@ -3,12 +3,13 @@ package com.flyobs.ecommercebackend.repositories;
 import com.flyobs.ecommercebackend.entities.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigInteger;
 import java.util.Optional;
 import java.util.List;
-
+@Repository
 public interface ProductRepository extends   JpaRepository<Product, BigInteger>{
     @Query(value = "SELECT p FROM Product  p  JOIN Category c   on c.id=p.category.id" +
             "  WHERE p.category.categoryName=:categoryName ")

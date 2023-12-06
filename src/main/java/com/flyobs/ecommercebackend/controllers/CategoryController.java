@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @RequestMapping("/categories")
+@EnableTransactionManagement
 @RestController
 public class CategoryController {
     private final ICategoryService categoryService;
