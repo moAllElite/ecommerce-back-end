@@ -75,7 +75,7 @@ class CategoryServiceImplTest {
         BigInteger id= BigInteger.TWO;
         //when
 
-            Optional<CategoryDto> categoryGiven = categoryService.getCategoryById(id);
+        Optional<CategoryDto> categoryGiven = categoryService.getCategoryById(id);
         Assertions.assertNotNull(categoryGiven.get());
 
 
