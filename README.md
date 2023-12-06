@@ -8,12 +8,13 @@ Lancer le project avec l'url
     
         http://localhost:8080/api/products
         http://localhost:8080/api/categories
-    
-    
+## Coverage Tests Unitaires
+![img_1.png](img_1.png)
 ## SonarCloud 
 ### 1. Tableau de bord 
 
 ![img.png](img.png)
+![img_2.png](img_2.png)
 ### 2.Main Analyses
 ![image](https://github.com/moAllElite/ecommerce-springboot/assets/123075078/8445dca8-d7f3-448a-8465-1f3536402eb2)
 ### 3.Activité

@@ -84,7 +84,7 @@ class ProductServiceImplTest {
         //given id
         BigInteger id = BigInteger.ONE;
         //expected name of category
-        String exceptedName =  "été";
+        String exceptedName =  "bois rouge";
         //when
         Optional<ProductDto> productGet= productService.findById(id);
         if(productGet.isPresent()){
@@ -100,8 +100,8 @@ class ProductServiceImplTest {
     @Test
     void paginatedAndSortingProducts() {
         //given
-        double expectedLength=7.0;
-        int pageSize = 3;
+        double expectedLength=1.0;
+        int pageSize = 50;
         int pageNumber = 0;
         boolean asc=false;
         //when

@@ -22,8 +22,7 @@ class CategoryServiceImplTest {
         //given
         categoryDto.setCategoryName("tissus");
         //when
-        Category categorySaved = categoryService
-                .saveCategory(categoryDto);
+        Category categorySaved = categoryService.saveCategory(categoryDto);
         //then
         Assertions.assertNotNull(categorySaved);
     }
@@ -77,9 +76,8 @@ class CategoryServiceImplTest {
         //when
 
             Optional<CategoryDto> categoryGiven = categoryService.getCategoryById(id);
-            System.out.println(categoryGiven.get().getCategoryName());
-            //then
-            Assertions.assertNotNull(categoryGiven.get());
+        Assertions.assertNotNull(categoryGiven.get());
+
 
     }
 }
