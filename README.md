@@ -16,4 +16,5 @@ Lancer le project avec l'url
 
 ![img.png](img.png)
 ![img_2.png](img_2.png)
-
+### 2. CI / CD passed
+![img_5.png](img_5.png)
