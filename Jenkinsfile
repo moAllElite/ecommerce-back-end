@@ -11,12 +11,12 @@ pipeline {
     }
     stage('Build Docker image') {
       steps {
-        sh "docker build -t springboot-mapstruct:v1 ."
+        sh "docker build -t ecommerce-back-end:v1 ."
       }
     }
     stage('Deploy') {
       steps {
-        sh "docker run --name springboot-mapstruct -d -p 8080:8080 springboot-mapstruct:v1"
+        sh "docker run --name ecommerce-back-end -d -p 8080:8080 ecommerce-back-end:v1"
       }
     }
   }
