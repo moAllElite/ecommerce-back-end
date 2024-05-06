@@ -11,7 +11,7 @@ pipeline {
     }
     stage('Build Docker image') {
       steps {
-        sh "docker build -t ecommerce-back-end:v1 ."
+        sh "docker build -t ecommerce-back-end:v2 ."
       }
     }
     stage('Deploy') {
