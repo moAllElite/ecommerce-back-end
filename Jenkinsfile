@@ -16,7 +16,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh "docker run --name ecommerce-back-end -d -p 8080:8080 ecommerce-back-end:v1"
+        sh "docker run --name ecommerce-back-end -d -p 8080:8080 ecommerce-back-end:v2"
       }
     }
     stage('Push to Docker Hub') {
