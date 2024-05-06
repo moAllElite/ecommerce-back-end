@@ -27,6 +27,6 @@ pipeline {
              sh "/Applications/Docker.app/Contents/Resources/bin/docker tag ecommerce-back-end:latest mouniang/ecommerce-back-end:v1"
              sh "/Applications/Docker.app/Contents/Resources/bin/docker push mouniang/ecommerce-back-end:v1"
        }
-
+     }
   }
 }
