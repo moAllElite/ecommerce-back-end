@@ -11,14 +11,14 @@ pipeline {
     }
     stage('Build Docker image') {
       steps {
-        sh "docker build -t ecommerce-back-end:v3 ."
+        sh "docker build -t ecommerce-back-end:v1."
       }
     }
-    /* stage('Deploy') {
+    stage('Deploy') {
       steps {
         sh "docker run --name ecommerce-backend -d -p 8080:8080 ecommerce-backend:v3"
       }
-    } */
+    }
     stage('Push to Docker Hub') {
        steps {
              withCredentials([usernamePassword(credentialsId: 'dockerhub_credentials',
