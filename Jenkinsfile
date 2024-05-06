@@ -16,7 +16,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-       sh '/Applications/Docker.app/Contents/Resources/bin/docker-compose/docker-compose up -d --build'
+       sh 'docker build -t ecommerce-back-end:v1 .'
       }
     }
     stage('Push to Docker Hub') {
